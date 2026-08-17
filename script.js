@@ -20,13 +20,15 @@ function appendValue(val) {
 
         if (lastChar === '.') return;
 
-        const parts = display.value.split(/[\+\-\*\/]/);
+        // ^ operatorunu da split-ə əlavə edirik
+        const parts = display.value.split(/[\+\-\*\/\^]/);
         const currentNumber = parts[parts.length - 1];
         if (currentNumber.includes('.')) return;
     }
 
     // 3. Əvvəldəki artıq sıfırların (0) silinməsi məntiqi
-    const parts = display.value.split(/[\+\-\*\/]/);
+    // ^ operatorunu da split-ə əlavə edirik
+    const parts = display.value.split(/[\+\-\*\/\^]/);
     const currentNumber = parts[parts.length - 1];
 
     // Əgər cari ədəd təkcə "0"-dırsa və nöqtə YOXDURSA (yeni rəqəm basıldıqda "0"-ı əvəzləyir)
@@ -54,9 +56,9 @@ function calculatePercent() {
             const lastChar = expression.slice(-1);
             const operators = ['+', '-', '*', '/', '^'];
 
-            // Əgər sonda natamam operator varsa, onu silirik:
+            // Sonda operator varsa, onun yerinə 0 əlavə edirik
             if (operators.includes(lastChar)) {
-                expression = expression.slice(0, -1);
+                expression = expression + '0';
             }
 
             // ^ işarəsini ** ilə əvəz edirik
@@ -77,9 +79,9 @@ function calculate() {
             const lastChar = expression.slice(-1);
             const operators = ['+', '-', '*', '/', '^'];
 
-            // Sonda artıq qalan operator varsa silirik
+            // Sonda operator varsa, onun yerinə 0 əlavə edirik
             if (operators.includes(lastChar)) {
-                expression = expression.slice(0, -1);
+                expression = expression + '0';
             }
 
             // ^ işarəsini ** ilə əvəz edirik (JavaScript üstü qüvvət operatoru)
@@ -106,8 +108,15 @@ function calculateSquareRoot() {
             }
 
             expression = expression.replace(/\^/g, '**');
-            display.value = Math.sqrt(eval(expression));
-            display.scrollLeft = display.scrollWidth;
+            const result = Math.sqrt(eval(expression));
+            
+            if (result === NaN || !isFinite(result)) {
+                display.value = 'Error!';
+                setTimeout(() => clearDisplay(), 1500);
+            } else {
+                display.value = result;
+                display.scrollLeft = display.scrollWidth;
+            }
         }
     } catch (error) {
         display.value = 'Error!';
@@ -127,8 +136,15 @@ function calculateLogarithm() {
             }
 
             expression = expression.replace(/\^/g, '**');
-            display.value = Math.log10(eval(expression));
-            display.scrollLeft = display.scrollWidth;
+            const result = Math.log10(eval(expression));
+            
+            if (result === NaN || !isFinite(result)) {
+                display.value = 'Error!';
+                setTimeout(() => clearDisplay(), 1500);
+            } else {
+                display.value = result;
+                display.scrollLeft = display.scrollWidth;
+            }
         }
     } catch (error) {
         display.value = 'Error!';

@@ -45,9 +45,12 @@ body {
     margin-bottom: 25px;
     font-weight: bold;
     letter-spacing: 2px;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    overflow-x: auto;
+    overflow-y: hidden;
+    text-overflow: clip;
     animation: displayGlow 0.3s ease;
+    white-space: nowrap;
+    scrollbar-width: none;
 }
 
 @keyframes displayGlow {
@@ -60,6 +63,10 @@ body {
     100% {
         box-shadow: 0 0 5px rgba(0, 212, 255, 0.3);
     }
+}
+
+#display::-webkit-scrollbar {
+    display: none;
 }
 
 #display::placeholder {
@@ -165,7 +172,7 @@ body {
 
     #display {
         padding: 20px;
-        font-size: 1.8em;
+        font-size: 2em;
         margin-bottom: 20px;
     }
 
@@ -190,8 +197,16 @@ body {
 
     #display {
         padding: 18px;
-        font-size: 1.6em;
+        font-size: 1.8em;
         margin-bottom: 15px;
+        white-space: nowrap;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scrollbar-width: none;
+    }
+
+    #display::-webkit-scrollbar {
+        display: none;
     }
 
     .btn {
