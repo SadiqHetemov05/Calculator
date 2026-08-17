@@ -1,4 +1,16 @@
 const display = document.getElementById('display');
+const buttons = document.querySelectorAll('.btn');
+
+// Telefonda buton qayıtması
+buttons.forEach(btn => {
+    btn.addEventListener('touchstart', function() {
+        this.classList.add('active');
+    });
+    
+    btn.addEventListener('touchend', function() {
+        this.classList.remove('active');
+    });
+});
 
 function appendValue(val) {
     const lastChar = display.value.slice(-1);

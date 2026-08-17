@@ -52,6 +52,7 @@ body {
     white-space: nowrap;
     scrollbar-width: none;
     -ms-overflow-style: none;
+    text-overflow: clip;
 }
 
 @keyframes displayGlow {
@@ -141,6 +142,15 @@ body {
         transform: scale(0.95);
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
     }
+
+    .btn:not(.active) {
+        transition: all 0.1s ease;
+    }
+
+    .btn.active {
+        background: #0f3460;
+        transform: scale(1);
+    }
 }
 
 .btn.operator {
@@ -228,6 +238,7 @@ body {
         overflow-y: hidden;
         scrollbar-width: none;
         -ms-overflow-style: none;
+        text-overflow: clip;
     }
 
     #display::-webkit-scrollbar {
@@ -243,6 +254,19 @@ body {
 
     .btn:active {
         transform: scale(0.92);
+        background: #16497a;
+    }
+
+    .btn.operator:active {
+        background: #764ba2;
+    }
+
+    .btn.equal:active {
+        background: #00e6bb;
+    }
+
+    .btn.function:active {
+        background: #764ba2;
     }
 
     .buttons {
